@@ -2,8 +2,8 @@ import React from 'react';
 import './App.scss';
 
 import SearchBar from '../SearchBar/SearchBar';
-// import SearchResults from '../SearchResults/SearchResults';
-// import Playlist from '../Playlist/Playlist';
+import SearchResults from '../SearchResults/SearchResults';
+import Playlist from '../Playlist/Playlist';
 
 function App() {
   return (
@@ -14,10 +14,10 @@ function App() {
       <SearchBar/>
       <div className="App-columnWrapper">
         <div className="App-column">
-          {/* <SearchResults/> */}
+          <SearchResults/>
         </div>
         <div className="App-column">
-          {/* <Playlist/> */}
+          <Playlist/>
         </div>
       </div>
 

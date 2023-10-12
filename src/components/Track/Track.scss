@@ -1,0 +1,41 @@
+@import '../../styles/variables.scss';
+
+.Track {
+    padding: 16px 0;
+    border-bottom: 1px solid $primary;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-name {
+        font-family: $text-family;
+        font-size: $medium;
+    }
+
+    &-artist {
+        font-family: $text-family;
+        font-size: 20px;
+    }
+
+    &-btn {
+        border: none;
+        box-shadow: none;
+        font-family: $heading-family;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 20px;
+        padding: 5px;
+        border-radius: 30px;
+        background: $white;
+        color: $primary;
+        transition: .25s;
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+
+        &:hover {
+            background: $primary;
+            color: $white;
+        }
+    }
+}
