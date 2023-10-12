@@ -50,7 +50,7 @@ function App() {
   }, [playlistTracks])
 
   const removeTrack = (track:TrackType) => {
-    //TODO
+    setPlaylistTracks(prevTracks => (prevTracks.filter((currentTrack) => track.id !== currentTrack.id)))
   }
 
   return (
