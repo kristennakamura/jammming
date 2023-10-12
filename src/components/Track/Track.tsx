@@ -1,20 +1,23 @@
 import React from 'react';
 import './Track.scss';
 
-interface TrackProps {
-    artist: string,
-    name: string,
-    id: string
+import { TrackType } from '../App/App';
+
+export type TrackProps = {
+  track: TrackType;
+  buttonText: string; 
+  onClick: (track:TrackType) => void;
+
 }
 
-function Track({artist, name, id}:TrackProps) {
+function Track({track, onClick, buttonText}:TrackProps) {
   return (
     <li className="Track">
         <div> 
-            <h3 className="Track-name">{name}</h3>
-            <p className="Track-artist">{artist}</p>
+            <h3 className="Track-name">{track.name}</h3>
+            <p className="Track-artist">{track.artist}</p>
         </div>
-        <button className="Track-btn" onClick={() => {console.log('hi')}}>+ </button>
+        <button className="Track-btn" onClick={() => {onClick(track)}}>{buttonText} </button>
     </li>
   );
 }
