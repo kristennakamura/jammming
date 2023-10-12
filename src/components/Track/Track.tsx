@@ -7,7 +7,6 @@ export type TrackProps = {
   track: TrackType;
   buttonText: string; 
   onClick: (track:TrackType) => void;
-
 }
 
 function Track({track, onClick, buttonText}:TrackProps) {
@@ -17,6 +16,7 @@ function Track({track, onClick, buttonText}:TrackProps) {
             <h3 className="Track-name">{track.name}</h3>
             <p className="Track-artist">{track.artist}</p>
         </div>
+        {/* TODO: add aria-label */}
         <button className="Track-btn" onClick={() => {onClick(track)}}>{buttonText} </button>
     </li>
   );

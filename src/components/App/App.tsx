@@ -37,7 +37,7 @@ function App() {
       "uri": "spotify:track:3fthfkkvy9av3q3uAGVf7U"
     }
   ]);
-
+  const [playlistName, setPlaylistName] = useState<string>('New Playlist');
   const [playlistTracks, setPlaylistTracks] = useState<TrackType[]>([]);
 
   const addTrack = useCallback((track:TrackType):void => {
@@ -53,6 +53,10 @@ function App() {
     setPlaylistTracks(prevTracks => (prevTracks.filter((currentTrack) => track.id !== currentTrack.id)))
   }
 
+  const updatePlaylistName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPlaylistName(e.target.value);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -64,7 +68,12 @@ function App() {
           <SearchResults searchResults={searchResults} addTrack={addTrack}/>
         </div>
         <div className="App-column">
-          <Playlist playlistTracks={playlistTracks} removeTrack={removeTrack}/>
+          <Playlist 
+            playlistName={playlistName}
+            playlistTracks={playlistTracks}
+            updatePlaylistName={updatePlaylistName}
+            removeTrack={removeTrack}
+            />
         </div>
       </div>
 
