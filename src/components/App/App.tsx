@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import './App.scss';
 
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+
+import useSpotifyApi from '../../utils/useSpotifyApi';
 
 export type TrackType = {
   id: string,
@@ -14,29 +16,8 @@ export type TrackType = {
 }
 
 function App() {
-  const [searchResults, setSearchResults] = useState<TrackType[]>([
-    {
-      "id": "4lY95OMGb9WxP6IYut64ir",
-      "name": "Shake It Out",
-      "artist": "Florence + The Machine",
-      "album": "Ceremonials (Deluxe Edition)",
-      "uri": "spotify:track:4lY95OMGb9WxP6IYut64ir"
-    },
-    {
-      "id": "4oS1UEAjl1Fs2nCpOAbp9Q",
-      "name": "Shake It Out",
-      "artist": "Manchester Orchestra",
-      "album": "Mean Everything To Nothing",
-      "uri": "spotify:track:4oS1UEAjl1Fs2nCpOAbp9Q"
-    },
-    {
-      "id": "3fthfkkvy9av3q3uAGVf7U",
-      "name": "Shake It Off",
-      "artist": "Taylor Swift",
-      "album": "1989 (Deluxe Edition)",
-      "uri": "spotify:track:3fthfkkvy9av3q3uAGVf7U"
-    }
-  ]);
+  const { data, search } = useSpotifyApi();
+
   const [playlistName, setPlaylistName] = useState<string>('New Playlist');
   const [playlistTracks, setPlaylistTracks] = useState<TrackType[]>([]);
 
@@ -48,6 +29,10 @@ function App() {
     //else add to playlist
     setPlaylistTracks(prevTracks => [...prevTracks, track])
   }, [playlistTracks])
+
+  const handleSearch = (term: string) => {
+    search(term);
+  }
 
   const removeTrack = (track:TrackType) => {
     setPlaylistTracks(prevTracks => (prevTracks.filter((currentTrack) => track.id !== currentTrack.id)))
@@ -62,10 +47,10 @@ function App() {
       <header className="App-header">
         <h1 className="App-heading">Ja<span>mmm</span>ing</h1>
       </header>
-      <SearchBar/>
+      <SearchBar handleSearch={handleSearch}/>
       <div className="App-columnWrapper">
         <div className="App-column">
-          <SearchResults searchResults={searchResults} addTrack={addTrack}/>
+          <SearchResults searchResults={data} addTrack={addTrack}/>
         </div>
         <div className="App-column">
           <Playlist 

@@ -13,7 +13,7 @@ h2 {
 .App {
   text-align: center;
   background: url('./bg-disco.png') no-repeat fixed top left, radial-gradient( circle farthest-corner at 10% 20%,  rgb(154, 164, 251) 42%, rgba(92,202,238,0.41) 93.6% ) ;
-  height: 100vh;
+  min-height: 100vh;
   padding-bottom: 60px;
 }
 
