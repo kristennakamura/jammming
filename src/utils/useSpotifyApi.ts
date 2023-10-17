@@ -5,6 +5,7 @@ interface UseSpotifyApi {
     isQuerying: boolean,
     getAccessToken: () => string | void,
     search: (term: string) => Promise<void>,
+    savePlaylist: (name: string, trackUris: string[]) => Promise<Response> | undefined,
 }
 
 interface Track {
@@ -29,7 +30,6 @@ export default function useSpotifyApi(): UseSpotifyApi {
 
     const getAccessToken = () => {
         if (accessToken) {
-            console.log(accessToken)
             return accessToken;
         }
 
@@ -76,6 +76,36 @@ export default function useSpotifyApi(): UseSpotifyApi {
         });
     }
 
+    const savePlaylist = (name: string, trackUris: string[]) => {
+        if (!name || !trackUris.length) {
+            // TODO: add error messaging
+            return;
+        }
 
-    return {data, isQuerying, getAccessToken, search};
+        const accessToken = getAccessToken();
+        const headers = { Authorization: `Bearer ${accessToken}` };
+        let userId: string;
+
+        return fetch('https://api.spotify.com/v1/me', {headers: headers}
+        ).then(response => response.json()
+        ).then(jsonResponse => {
+            userId = jsonResponse.id;
+            return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+                headers: headers,
+                method: 'POST',
+                body: JSON.stringify({name: name})
+            }).then(response => response.json()
+            ).then(jsonResponse => {
+                const playlistId = jsonResponse.id;
+                return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`, {
+                    headers: headers,
+                    method: 'POST',
+                    body: JSON.stringify({uris: trackUris})
+                });
+            });
+        });
+    };
+
+
+    return {data, isQuerying, getAccessToken, search, savePlaylist};
 }

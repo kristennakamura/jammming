@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.scss';
 
 import SearchBar from '../SearchBar/SearchBar';
@@ -16,7 +16,7 @@ export type TrackType = {
 }
 
 function App() {
-  const { data, search } = useSpotifyApi();
+  const { data, search, savePlaylist } = useSpotifyApi();
 
   const [playlistName, setPlaylistName] = useState<string>('New Playlist');
   const [playlistTracks, setPlaylistTracks] = useState<TrackType[]>([]);
@@ -42,6 +42,11 @@ function App() {
     setPlaylistName(e.target.value);
   }
 
+  const onSave = () => {
+    const trackUris = playlistTracks.map(track => track.uri);
+    savePlaylist(playlistName, trackUris);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -58,6 +63,7 @@ function App() {
             playlistTracks={playlistTracks}
             updatePlaylistName={updatePlaylistName}
             removeTrack={removeTrack}
+            onSave={onSave}
             />
         </div>
       </div>

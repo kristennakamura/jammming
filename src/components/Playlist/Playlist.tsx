@@ -9,13 +9,14 @@ type PlaylistProps = {
   playlistTracks: TrackType[];
   updatePlaylistName: (event: React.ChangeEvent<HTMLInputElement>) => void;
   removeTrack: (track:TrackType) => void;
+  onSave: () => void;
 }
 
-function Playlist({playlistName, playlistTracks, removeTrack, updatePlaylistName}:PlaylistProps) {
+function Playlist({playlistName, playlistTracks, removeTrack, updatePlaylistName, onSave}:PlaylistProps) {
   return (
     <div className="Playlist">
         <input className="Playlist-input" type="text" onChange={updatePlaylistName} value={playlistName}/>
-        <button className="Playlist-btn">Save to Spotify</button>
+        <button className="Playlist-btn" onClick={onSave}>Save to Spotify</button>
         <TrackList tracks={playlistTracks} onClick={removeTrack} buttonText="-"/>
     </div>
   );
